@@ -12,7 +12,7 @@ class Language(models.Model):
     def __str__(self):
         return self.name
 
-# Users, lang = Language, pro_level = proficiency level  native_lang = native_language, Learn_lang = Learning_language
+# Users, pro_level = proficiency level  native_lang = native_language, Learn_lang = Learning_language
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -35,7 +35,7 @@ class UserProfile(models.Model):
                                  default='beginner')
     bio = models.TextField(blank=True)
     def __str__(self):
-        return f"{self.user.username}'s Profile"
+        return self.user.username
 
 
 # Should auto create profile when user is created
@@ -46,13 +46,13 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
+    instance.userprofile.save()
 
 # Chat Room two users practicing a language lang = Language,
 
 class ChatRoom(models.Model):
     name = models.CharField(max_length=75)
-    lang = models.ForeignKey(Language, on_delete=models.CASCADE)
+    language = models.ForeignKey(Language, on_delete=models.CASCADE)
     people = models.ManyToManyField(User, related_name='chat_rooms')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -70,7 +70,7 @@ class ChatRoom(models.Model):
 
 # Individual messages in a chat room
 class Message(models.Model):
-    chat_room = models.ForeignKey(ChatRoom,
+    chatroom = models.ForeignKey(ChatRoom,
                                   on_delete=models.CASCADE,
                                   related_name='messages')
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
