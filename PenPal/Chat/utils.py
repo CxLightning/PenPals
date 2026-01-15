@@ -10,7 +10,7 @@ from .models import UserProfile, ChatRoom, Message
 def find_lang_partners(user, language):
     try:
         user_profile = user.userprofile
-    except Userprofile.DoesNotExist:
+    except UserProfile.DoesNotExist:
         return UserProfile.objects.none()
 
     ideal_matches = UserProfile.objects.filter(
@@ -61,7 +61,7 @@ def get_or_create_chatroom(user1, user2, language):
     if existing_room:
         return existing_room
 
-    room_name = f'{langauage.name}: {user1.username} & {user2.username}'
+    room_name = f'{language.name}: {user1.username} & {user2.username}'
     new_room = ChatRoom.objects.create(
         name=room_name,
         language=language
