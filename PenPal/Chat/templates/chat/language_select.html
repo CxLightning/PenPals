@@ -1,0 +1,136 @@
+
+{% extends "base.html" %}
+
+{% block title %}Choose Language - PenPal{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem 0;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+        font-weight: 800;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .languages-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .language-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 12px;
+        padding: 2rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .language-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(100%);
+        transition: transform 0.3s;
+    }
+
+    .language-card:hover::before {
+        transform: translateY(0);
+    }
+
+    .language-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .language-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .language-name {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .language-learners {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        position: relative;
+        z-index: 1;
+    }
+
+    .language-card:nth-child(2) {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    .language-card:nth-child(3) {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    .language-card:nth-child(4) {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    }
+
+    .language-card:nth-child(5) {
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    }
+
+    .language-card:nth-child(6) {
+        background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>🌍 Choose a Language to Learn</h1>
+    <p>Connect with native speakers and start your language learning journey today</p>
+</div>
+
+<div class="languages-grid">
+    {% for language in languages %}
+    <a href="{% url 'partner_list' language.id %}" class="language-card">
+        <div class="language-icon">{{ language.flag_emoji }}</div>
+        <div class="language-name">{{ language.name }}</div>
+        <div class="language-learners">
+            <i class="fas fa-users"></i>
+            {{ language.learner_count }} learners
+        </div>
+    </a>
+    {% empty %}
+    <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+        <i class="fas fa-inbox" style="font-size: 3rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
+        <p style="color: var(--text-secondary);">No languages available yet. Contact admin.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

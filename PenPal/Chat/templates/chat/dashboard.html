@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - PenPal{% endblock %}
+{% block content %}
+<h1>Welcome, {{ user.username }}! 🎉</h1>
+<p>Messages sent: {{ message_count }}</p>
+<p>Days active: {{ days_active }}</p>
+<a href="{% url 'language_select' %}" class="btn btn-primary">Find Language Partners</a>
+<a href="{% url 'my_chats' %}" class="btn btn-outline">My Chats</a>
+{% endblock %}

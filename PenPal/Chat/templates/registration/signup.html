@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up - PenPal{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
+
+    .container {
+        margin: 0;
+        padding: 2rem;
+    }
+
+    .content-wrapper {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .signup-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .signup-header h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border: 2px solid var(--border);
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .btn-block {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.05rem;
+    }
+
+    .login-link {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: var(--text-secondary);
+    }
+
+    .login-link a {
+        color: var(--primary);
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="signup-header">
+    <h1>Join PenPal! 🎉</h1>
+    <p>Start learning languages with native speakers</p>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="form-row">
+        <div class="form-group">
+            <label for="id_first_name">First Name</label>
+            <input
+                type="text"
+                name="first_name"
+                id="id_first_name"
+                class="form-control"
+                placeholder="John"
+            >
+        </div>
+        <div class="form-group">
+            <label for="id_last_name">Last Name</label>
+            <input
+                type="text"
+                name="last_name"
+                id="id_last_name"
+                class="form-control"
+                placeholder="Doe"
+            >
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="id_username">
+            <i class="fas fa-user"></i> Username *
+        </label>
+        <input
+            type="text"
+            name="username"
+            id="id_username"
+            class="form-control"
+            placeholder="johndoe"
+            required
+            autofocus
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="id_email">
+            <i class="fas fa-envelope"></i> Email *
+        </label>
+        <input
+            type="email"
+            name="email"
+            id="id_email"
+            class="form-control"
+            placeholder="john@example.com"
+            required
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="id_password">
+            <i class="fas fa-lock"></i> Password *
+        </label>
+        <input
+            type="password"
+            name="password"
+            id="id_password"
+            class="form-control"
+            placeholder="Create a strong password"
+            required
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="id_password_confirm">
+            <i class="fas fa-lock"></i> Confirm Password *
+        </label>
+        <input
+            type="password"
+            name="password_confirm"
+            id="id_password_confirm"
+            class="form-control"
+            placeholder="Confirm your password"
+            required
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="id_native_language">
+            <i class="fas fa-globe"></i> Native Language
+        </label>
+        <select name="native_language" id="id_native_language" class="form-control">
+            <option value="">Select your native language</option>
+            {% for language in languages %}
+            <option value="{{ language.id }}">{{ language.flag_emoji }} {{ language.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block">
+        <i class="fas fa-user-plus"></i> Create Account
+    </button>
+</form>
+
+<div class="login-link">
+    Already have an account? <a href="{% url 'login' %}">Sign in</a>
+</div>
+{% endblock %}

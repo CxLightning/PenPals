@@ -17,14 +17,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await self.accept()
             return
 
-        is_participant = await self.check_room_participant()
+        is_participant = await self.check_room_people()
         if not is_participant:
 
             await self.close()
             return
 
 
-        await self.channels_layer.group_add(
+        await self.channel_layer.group_add(
             self.room_group_name,
             self.channel_name
         )

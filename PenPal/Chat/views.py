@@ -234,7 +234,7 @@ def settings_view(request):
 #Authentication
 
 def signup(request):
-    if request.user.id_authenticated:
+    if request.user.is_authenticated:
         return redirect('dashboard')
 
     if request.method == 'POST':

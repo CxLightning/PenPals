@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}My Chats - PenPal{% endblock %}
+{% block content %}
+<h1>My Chats</h1>
+{% for chat in chat_rooms %}
+<div style="border: 1px solid #ddd; padding: 1rem; margin-bottom: 1rem; border-radius: 8px;">
+    <h3>{{ chat.room.name }}</h3>
+    <p>With: {{ chat.other_user.username }}</p>
+    <p>Last message: {{ chat.last_message.content|default:"No messages yet"|truncatewords:10 }}</p>
+    <a href="{% url 'chat_room' chat.room.id %}" class="btn btn-primary">Open Chat</a>
+</div>
+{% empty %}
+<p>No chats yet. <a href="{% url 'language_select' %}">Find a partner!</a></p>
+{% endfor %}
+{% endblock %}
